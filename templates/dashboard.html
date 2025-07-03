@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Filters Panel -->
+<div class="filters-panel">
+    <div class="filter-group">
+        <label>Origin City</label>
+        <select id="originCity">
+            <option value="">Select Origin</option>
+            <option value="SYD">Sydney (SYD)</option>
+            <option value="MEL">Melbourne (MEL)</option>
+            <option value="BNE">Brisbane (BNE)</option>
+            <option value="PER">Perth (PER)</option>
+            <option value="ADL">Adelaide (ADL)</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label>Destination City</label>
+        <select id="destinationCity">
+            <option value="">Select Destination</option>
+            <option value="SYD">Sydney (SYD)</option>
+            <option value="MEL">Melbourne (MEL)</option>
+            <option value="BNE">Brisbane (BNE)</option>
+            <option value="PER">Perth (PER)</option>
+            <option value="ADL">Adelaide (ADL)</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label>Date Range</label>
+        <input type="date" id="startDate">
+        <input type="date" id="endDate">
+    </div>
+    <button class="fetch-btn" onclick="fetchTrends()">
+        <i class="fas fa-search"></i>
+        🔍 Fetch Trends
+    </button>
+</div>
+
+<!-- Dashboard Grid -->
+<div class="dashboard-grid">
+    <!-- Popular Routes Card -->
+    <div class="card popular-routes-card">
+        <div class="card-header">
+            <h3>🔥 Top 5 Popular Routes</h3>
+            <div class="tooltip">
+                <i class="fas fa-question-circle"></i>
+                <span class="tooltip-text">Most booked routes in the last 7 days</span>
+            </div>
+        </div>
+        <div class="card-content">
+            <div id="popularRoutes" class="routes-list">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Price Trends Card -->
+    <div class="card price-trends-card">
+        <div class="card-header">
+            <h3>📈 Price Trends</h3>
+            <div class="tooltip">
+                <i class="fas fa-question-circle"></i>
+                <span class="tooltip-text">7-day average price trends</span>
+            </div>
+        </div>
+        <div class="card-content">
+            <canvas id="priceChart"></canvas>
+        </div>
+    </div>
+
+    <!-- High Demand Periods Card -->
+    <div class="card demand-periods-card">
+        <div class="card-header">
+            <h3>📅 High-Demand Periods</h3>
+            <div class="tooltip">
+                <i class="fas fa-question-circle"></i>
+                <span class="tooltip-text">Booking spikes and demand patterns</span>
+            </div>
+        </div>
+        <div class="card-content">
+            <canvas id="demandChart"></canvas>
+        </div>
+    </div>
+
+    <!-- AI Insights Card -->
+    <div class="card ai-insights-card">
+        <div class="card-header">
+            <h3>🧠 GPT-powered Insights</h3>
+            <div class="tooltip">
+                <i class="fas fa-question-circle"></i>
+                <span class="tooltip-text">AI-generated market behavior analysis</span>
+            </div>
+        </div>
+        <div class="card-content">
+            <div id="aiInsights" class="insights-list">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Advanced Analytics Section -->
+<div class="advanced-analytics">
+    <h2 class="section-title">🚀 Advanced Analytics</h2>
+    
+    <div class="dashboard-grid">
+        <!-- Weather Impact Card -->
+        <div class="card weather-impact-card">
+            <div class="card-header">
+                <h3>🌦️ Weather Impact Analysis</h3>
+                <div class="tooltip">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="tooltip-text">How weather affects flight bookings</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <div id="weatherImpact" class="weather-grid">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Competitor Analysis Card -->
+        <div class="card competitor-card">
+            <div class="card-header">
+                <h3>🏆 Competitor Analysis</h3>
+                <div class="tooltip">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="tooltip-text">Track competitor pricing and occupancy</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <div id="competitorAnalysis" class="competitor-list">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Optimization Card -->
+        <div class="card revenue-optimization-card">
+            <div class="card-header">
+                <h3>💰 Revenue Optimization</h3>
+                <div class="tooltip">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="tooltip-text">AI-powered pricing recommendations</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <div id="revenueOptimization" class="optimization-list">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Sentiment Card -->
+        <div class="card social-sentiment-card">
+            <div class="card-header">
+                <h3>📱 Social Media Sentiment</h3>
+                <div class="tooltip">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="tooltip-text">Travel sentiment across social platforms</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <canvas id="sentimentChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance KPIs Section -->
+<div class="kpi-dashboard">
+    <h2 class="section-title">📊 Performance Dashboard</h2>
+    <div id="performanceKPIs" class="kpi-grid">
+        <!-- Dynamic content will be loaded here -->
+    </div>
+</div>
+{% endblock %}

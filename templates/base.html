@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}✈️ AirPulse – Airline Demand Monitor{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="nav-left">
+                <h1 class="nav-title" onclick="toggleSidebar()" style="cursor: pointer;">✈️ AirPulse – Airline Demand Monitor</h1>
+            </div>
+            <div class="nav-right">
+                <div class="language-selector">
+                    <select id="languageSelect" onchange="changeLanguage(this.value)">
+                        <option value="en">🇺🇸 English</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-item {% if request.endpoint == 'dashboard' %}active{% endif %}" onclick="navigateTo('/')">
+                <i class="fas fa-tachometer-alt"></i>
+                <span data-translate="dashboard">Dashboard</span>
+            </div>
+            <div class="sidebar-item {% if request.endpoint == 'trends' %}active{% endif %}" onclick="navigateTo('/trends')">
+                <i class="fas fa-chart-line"></i>
+                <span data-translate="trends">Explore Trends</span>
+            </div>
+            <div class="sidebar-item {% if request.endpoint == 'upload' %}active{% endif %}" onclick="navigateTo('/upload')">
+                <i class="fas fa-upload"></i>
+                <span data-translate="upload">Upload CSV</span>
+            </div>
+            <div class="sidebar-item {% if request.endpoint == 'predictions' %}active{% endif %}" onclick="navigateTo('/predictions')">
+                <i class="fas fa-brain"></i>
+                <span data-translate="predictions">Predictions (AI)</span>
+            </div>
+            <div class="sidebar-item" onclick="toggleChat()">
+                <i class="fas fa-robot"></i>
+                <span data-translate="chat">Chat with AirBot 🤖</span>
+            </div>
+            <div class="sidebar-item {% if request.endpoint == 'settings' %}active{% endif %}" onclick="navigateTo('/settings')">
+                <i class="fas fa-cog"></i>
+                <span data-translate="settings">Settings</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- AirBot Chat -->
+    <div class="airbot-container">
+        <div class="airbot-toggle" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="airbot-chat" id="airbotChat">
+            <div class="chat-header">
+                <h4>🤖 AirBot Assistant</h4>
+                <div class="chat-language">
+                    <select id="chatLanguage" onchange="setChatLanguage(this.value)">
+                        <option value="en">EN</option>
+                        <option value="es">ES</option>
+                    </select>
+                </div>
+                <button onclick="toggleChat()">×</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="bot-message">
+                    Hey there, Captain! Ready to explore the skies of data? ✈️
+                </div>
+            </div>
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button class="suggestion-btn" onclick="sendSuggestion('What are the best routes?')">Best Routes?</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('How should I price my rooms?')">Pricing Advice?</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('Weather impact analysis')">Weather Impact?</button>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask me about airline trends...">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-plane"></i>
+            <p>Loading flight data...</p>
+        </div>
+    </div>
+
+    <!-- Notifications Toggle -->
+    <div class="notifications-toggle" onclick="toggleNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge" id="notificationBadge">0</span>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <div class="notifications-header">
+            <h4>⚡ Live Notifications</h4>
+            <button onclick="toggleNotifications()">×</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Dynamic notifications will be loaded here -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

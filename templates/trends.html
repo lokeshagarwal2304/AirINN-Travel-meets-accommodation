@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Trends Analysis - AirPulse{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">📈 Trends Analysis</h1>
+    <p class="page-subtitle">Deep dive into airline demand patterns and market trends</p>
+</div>
+
+<div class="trends-dashboard">
+    <!-- Advanced Filters -->
+    <div class="advanced-filters-panel">
+        <div class="filter-section">
+            <h3>🎯 Advanced Filters</h3>
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Time Period</label>
+                    <select id="timePeriod">
+                        <option value="7d">Last 7 Days</option>
+                        <option value="30d">Last 30 Days</option>
+                        <option value="90d">Last 90 Days</option>
+                        <option value="1y">Last Year</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Route Type</label>
+                    <select id="routeType">
+                        <option value="all">All Routes</option>
+                        <option value="domestic">Domestic Only</option>
+                        <option value="international">International Only</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Passenger Type</label>
+                    <select id="passengerType">
+                        <option value="all">All Passengers</option>
+                        <option value="business">Business</option>
+                        <option value="leisure">Leisure</option>
+                        <option value="backpacker">Backpacker</option>
+                    </select>
+                </div>
+                <button class="apply-filters-btn" onclick="applyAdvancedFilters()">
+                    <i class="fas fa-filter"></i>
+                    Apply Filters
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trends Charts Grid -->
+    <div class="trends-grid">
+        <!-- Booking Trends Chart -->
+        <div class="card trend-chart-card">
+            <div class="card-header">
+                <h3>📊 Booking Trends Over Time</h3>
+                <div class="chart-controls">
+                    <button class="chart-btn active" onclick="switchChart('bookings', 'line')">Line</button>
+                    <button class="chart-btn" onclick="switchChart('bookings', 'bar')">Bar</button>
+                    <button class="chart-btn" onclick="switchChart('bookings', 'area')">Area</button>
+                </div>
+            </div>
+            <div class="card-content">
+                <canvas id="bookingTrendsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Revenue Trends Chart -->
+        <div class="card trend-chart-card">
+            <div class="card-header">
+                <h3>💰 Revenue Trends</h3>
+                <div class="trend-indicator positive">
+                    <i class="fas fa-arrow-up"></i>
+                    +23.5%
+                </div>
+            </div>
+            <div class="card-content">
+                <canvas id="revenueTrendsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Seasonal Patterns -->
+        <div class="card seasonal-patterns-card">
+            <div class="card-header">
+                <h3>🌊 Seasonal Patterns</h3>
+                <div class="tooltip">
+                    <i class="fas fa-question-circle"></i>
+                    <span class="tooltip-text">Historical seasonal booking patterns</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <canvas id="seasonalChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Route Performance Heatmap -->
+        <div class="card heatmap-card">
+            <div class="card-header">
+                <h3>🗺️ Route Performance Heatmap</h3>
+            </div>
+            <div class="card-content">
+                <div id="routeHeatmap" class="heatmap-container">
+                    <!-- Dynamic heatmap will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trend Insights -->
+    <div class="trend-insights">
+        <h2 class="section-title">🔍 Trend Insights</h2>
+        <div class="insights-grid">
+            <div class="insight-card positive">
+                <div class="insight-icon">📈</div>
+                <div class="insight-content">
+                    <h4>Growing Markets</h4>
+                    <p>Brisbane-Sydney route showing 45% growth this quarter</p>
+                    <span class="insight-value">+45%</span>
+                </div>
+            </div>
+            <div class="insight-card warning">
+                <div class="insight-icon">⚠️</div>
+                <div class="insight-content">
+                    <h4>Declining Routes</h4>
+                    <p>Perth-Adelaide experiencing seasonal decline</p>
+                    <span class="insight-value">-12%</span>
+                </div>
+            </div>
+            <div class="insight-card info">
+                <div class="insight-icon">💡</div>
+                <div class="insight-content">
+                    <h4>Opportunity</h4>
+                    <p>Weekend premium pricing potential identified</p>
+                    <span class="insight-value">+20%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}AI Predictions - AirPulse{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">🔮 AI Predictions</h1>
+    <p class="page-subtitle">Machine learning powered forecasts and demand predictions</p>
+</div>
+
+<div class="predictions-dashboard">
+    <!-- Prediction Controls -->
+    <div class="prediction-controls">
+        <div class="control-group">
+            <label>Prediction Horizon</label>
+            <select id="predictionHorizon" onchange="updatePredictions()">
+                <option value="7d">Next 7 Days</option>
+                <option value="30d">Next 30 Days</option>
+                <option value="90d">Next 90 Days</option>
+                <option value="1y">Next Year</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>Model Type</label>
+            <select id="modelType" onchange="updatePredictions()">
+                <option value="neural">Neural Network</option>
+                <option value="regression">Linear Regression</option>
+                <option value="ensemble">Ensemble Model</option>
+                <option value="arima">ARIMA</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>Confidence Level</label>
+            <select id="confidenceLevel">
+                <option value="80">80%</option>
+                <option value="90" selected>90%</option>
+                <option value="95">95%</option>
+                <option value="99">99%</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Prediction Results Grid -->
+    <div class="predictions-grid">
+        <!-- Booking Predictions -->
+        <div class="card prediction-card">
+            <div class="card-header">
+                <h3>📊 Booking Predictions</h3>
+                <div class="model-accuracy">
+                    <span class="accuracy-badge">92% Accurate</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <canvas id="bookingPredictionChart"></canvas>
+                <div class="prediction-summary">
+                    <div class="summary-item">
+                        <span class="label">Next Week:</span>
+                        <span class="value positive">+23% ↗</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Peak Day:</span>
+                        <span class="value">Friday</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Predictions -->
+        <div class="card prediction-card">
+            <div class="card-header">
+                <h3>💰 Revenue Forecasts</h3>
+                <div class="model-accuracy">
+                    <span class="accuracy-badge">89% Accurate</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <canvas id="revenuePredictionChart"></canvas>
+                <div class="prediction-summary">
+                    <div class="summary-item">
+                        <span class="label">Expected Revenue:</span>
+                        <span class="value positive">$45,600</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Growth Rate:</span>
+                        <span class="value positive">+18%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Price Predictions -->
+        <div class="card prediction-card">
+            <div class="card-header">
+                <h3>💲 Price Forecasts</h3>
+                <div class="model-accuracy">
+                    <span class="accuracy-badge">85% Accurate</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <canvas id="pricePredictionChart"></canvas>
+                <div class="prediction-summary">
+                    <div class="summary-item">
+                        <span class="label">Avg Price:</span>
+                        <span class="value">$285</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Trend:</span>
+                        <span class="value positive">Rising</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demand Heatmap Prediction -->
+        <div class="card prediction-card demand-heatmap">
+            <div class="card-header">
+                <h3>🗺️ Demand Heatmap Forecast</h3>
+            </div>
+            <div class="card-content">
+                <div id="demandHeatmap" class="heatmap-prediction">
+                    <!-- Dynamic heatmap will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Model Performance -->
+    <div class="model-performance">
+        <h2 class="section-title">🤖 Model Performance</h2>
+        <div class="performance-grid">
+            <div class="performance-card">
+                <div class="performance-metric">
+                    <div class="metric-value">92.3%</div>
+                    <div class="metric-label">Overall Accuracy</div>
+                </div>
+                <div class="performance-chart">
+                    <canvas id="accuracyChart"></canvas>
+                </div>
+            </div>
+            <div class="performance-card">
+                <div class="performance-metric">
+                    <div class="metric-value">0.08</div>
+                    <div class="metric-label">Mean Error Rate</div>
+                </div>
+                <div class="performance-chart">
+                    <canvas id="errorChart"></canvas>
+                </div>
+            </div>
+            <div class="performance-card">
+                <div class="performance-metric">
+                    <div class="metric-value">15ms</div>
+                    <div class="metric-label">Prediction Speed</div>
+                </div>
+                <div class="performance-indicator">
+                    <div class="indicator-bar">
+                        <div class="indicator-fill" style="width: 95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prediction Alerts -->
+    <div class="prediction-alerts">
+        <h2 class="section-title">⚠️ Prediction Alerts</h2>
+        <div class="alerts-list">
+            <div class="alert-item high">
+                <div class="alert-icon">🚨</div>
+                <div class="alert-content">
+                    <h4>High Demand Alert</h4>
+                    <p>SYD-MEL route predicted to surge 45% next weekend</p>
+                    <span class="alert-time">Predicted for: Jan 20-22</span>
+                </div>
+                <div class="alert-confidence">95% Confidence</div>
+            </div>
+            <div class="alert-item medium">
+                <div class="alert-icon">⚡</div>
+                <div class="alert-content">
+                    <h4>Price Opportunity</h4>
+                    <p>Optimal pricing window detected for BNE-SYD route</p>
+                    <span class="alert-time">Window: Jan 18-25</span>
+                </div>
+                <div class="alert-confidence">87% Confidence</div>
+            </div>
+            <div class="alert-item low">
+                <div class="alert-icon">📉</div>
+                <div class="alert-content">
+                    <h4>Demand Decline</h4>
+                    <p>Perth routes showing seasonal decline pattern</p>
+                    <span class="alert-time">Expected: Feb 1-15</span>
+                </div>
+                <div class="alert-confidence">78% Confidence</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

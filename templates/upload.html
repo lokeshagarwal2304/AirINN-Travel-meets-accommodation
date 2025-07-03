@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Data - AirPulse{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">📤 Data Upload Center</h1>
+    <p class="page-subtitle">Upload your airline booking data for instant analysis</p>
+</div>
+
+<div class="upload-dashboard">
+    <!-- Upload Methods -->
+    <div class="upload-methods">
+        <div class="method-tabs">
+            <button class="tab-btn active" onclick="switchUploadMethod('csv')">
+                <i class="fas fa-file-csv"></i>
+                CSV Upload
+            </button>
+            <button class="tab-btn" onclick="switchUploadMethod('api')">
+                <i class="fas fa-plug"></i>
+                API Integration
+            </button>
+            <button class="tab-btn" onclick="switchUploadMethod('database')">
+                <i class="fas fa-database"></i>
+                Database Connect
+            </button>
+        </div>
+
+        <!-- CSV Upload Section -->
+        <div class="upload-section active" id="csvUpload">
+            <div class="card upload-card">
+                <div class="card-header">
+                    <h3>📊 CSV File Upload</h3>
+                    <div class="upload-status" id="uploadStatus">
+                        <span class="status-indicator ready"></span>
+                        Ready to upload
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h4>Drag & Drop your CSV file here</h4>
+                        <p>or click to browse files</p>
+                        <input type="file" id="csvFile" accept=".csv" style="display: none;" onchange="handleFileSelect(event)">
+                        <button class="upload-btn" onclick="document.getElementById('csvFile').click()">
+                            <i class="fas fa-folder-open"></i>
+                            Browse Files
+                        </button>
+                    </div>
+
+                    <!-- File Requirements -->
+                    <div class="file-requirements">
+                        <h4>📋 File Requirements</h4>
+                        <div class="requirements-grid">
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>CSV format only</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Max file size: 50MB</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Required columns: Date, Origin, Destination, Bookings, Price</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Date format: YYYY-MM-DD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Data Template -->
+            <div class="card template-card">
+                <div class="card-header">
+                    <h3>📝 Sample Data Template</h3>
+                    <button class="download-btn" onclick="downloadTemplate()">
+                        <i class="fas fa-download"></i>
+                        Download Template
+                    </button>
+                </div>
+                <div class="card-content">
+                    <div class="sample-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Bookings</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-01-15</td>
+                                    <td>SYD</td>
+                                    <td>MEL</td>
+                                    <td>125</td>
+                                    <td>285</td>
+                                </tr>
+                                <tr>
+                                    <td>2024-01-16</td>
+                                    <td>MEL</td>
+                                    <td>BNE</td>
+                                    <td>89</td>
+                                    <td>320</td>
+                                </tr>
+                                <tr>
+                                    <td>2024-01-17</td>
+                                    <td>BNE</td>
+                                    <td>SYD</td>
+                                    <td>156</td>
+                                    <td>295</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Integration Section -->
+        <div class="upload-section" id="apiIntegration">
+            <div class="card api-card">
+                <div class="card-header">
+                    <h3>🔌 API Integration</h3>
+                    <div class="connection-status">
+                        <span class="status-indicator disconnected"></span>
+                        Not Connected
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="api-form">
+                        <div class="form-group">
+                            <label>API Endpoint URL</label>
+                            <input type="url" id="apiEndpoint" placeholder="https://your-api.com/bookings">
+                        </div>
+                        <div class="form-group">
+                            <label>API Key</label>
+                            <input type="password" id="apiKey" placeholder="Enter your API key">
+                        </div>
+                        <div class="form-group">
+                            <label>Update Frequency</label>
+                            <select id="updateFrequency">
+                                <option value="realtime">Real-time</option>
+                                <option value="hourly">Hourly</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                            </select>
+                        </div>
+                        <button class="connect-btn" onclick="testApiConnection()">
+                            <i class="fas fa-plug"></i>
+                            Test Connection
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Database Connection Section -->
+        <div class="upload-section" id="databaseConnect">
+            <div class="card database-card">
+                <div class="card-header">
+                    <h3>🗄️ Database Connection</h3>
+                    <div class="connection-status">
+                        <span class="status-indicator disconnected"></span>
+                        Not Connected
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="database-form">
+                        <div class="form-group">
+                            <label>Database Type</label>
+                            <select id="dbType">
+                                <option value="mysql">MySQL</option>
+                                <option value="postgresql">PostgreSQL</option>
+                                <option value="mongodb">MongoDB</option>
+                                <option value="sqlite">SQLite</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Host</label>
+                            <input type="text" id="dbHost" placeholder="localhost">
+                        </div>
+                        <div class="form-group">
+                            <label>Port</label>
+                            <input type="number" id="dbPort" placeholder="3306">
+                        </div>
+                        <div class="form-group">
+                            <label>Database Name</label>
+                            <input type="text" id="dbName" placeholder="airline_data">
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="dbUsername" placeholder="username">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="dbPassword" placeholder="password">
+                        </div>
+                        <button class="connect-btn" onclick="testDatabaseConnection()">
+                            <i class="fas fa-database"></i>
+                            Test Connection
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload History -->
+    <div class="upload-history">
+        <h2 class="section-title">📚 Upload History</h2>
+        <div class="card history-card">
+            <div class="card-content">
+                <div class="history-list" id="uploadHistory">
+                    <!-- Dynamic upload history will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
