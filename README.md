@@ -1,11 +1,14 @@
 <h1 align="center">✈️ AirINN – AI-Powered Airline Demand Dashboard for Hostels</h1>
 <p align="center">
-  <img src="https://img.shields.io/badge/Made_with-v0.vercel-blue?style=for-the-badge&logo=vercel">
   <img src="https://img.shields.io/badge/UI%20Design-Indigo%20&%20Neon-blue?style=for-the-badge">
   <img src="https://img.shields.io/badge/Smart-Booking_Insights-orange?style=for-the-badge">
   <br><br>
   <b>“Turn travel trends into hostel profits with real-time airline data.”</b>
 </p>
+
+---
+
+![image](https://github.com/user-attachments/assets/1d66c6bd-bb0c-43a2-bb87-ffadc00a606a)
 
 ---
 
@@ -35,7 +38,7 @@
 
 ## 🌈 Tech Stack
 
-- 🎨 **Frontend**: Built with [`v0.vercel`](https://v0.dev) (AI UI Generator)
+- 🎨 **Frontend**: Node
 - 📊 **Charts**: Chart.js, Heatmap Calendar
 - 🧠 **AI Engine**: OpenAI GPT (placeholder-ready)
 - 📦 **APIs (Pluggable)**:
@@ -72,10 +75,12 @@
 
 ---
 
-## 📸 Screenshots (Coming Soon)
+## 📸 Screenshots (More Coming Soon)
 
 * 💻 Desktop View
-* 📱 Mobile-PWA Mode
+* 📱 Mobile-PWA Mode 
+![image](https://github.com/user-attachments/assets/e0fe42ab-7dcd-4812-92f5-5dc4be2b793e)
+
 * 🧭 Booking Radar
 * 🗺️ HeatMap View
 * 🧠 Insights Panel
